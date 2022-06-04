@@ -2,15 +2,15 @@ from fastapi import FastAPI
 from api import users, courses, sections
 
 app = FastAPI(
-    title="Fast API LMS",
+    title="WAITER LMS",
     description="LMS for managing students and courses.",
     version="0.0.1",
     contact={
-        "name": "Gwen",
-        "email": "gwen@example.com",
+        "name": "Waiter",
+        "email": "iwaiterorg@gmail.com",
     },
     license_info={
-        "name": "MIT",
+        "name": "GNU",
     },
 )
 
