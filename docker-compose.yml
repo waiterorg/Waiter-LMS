@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+
+  pgdb:
+      container_name: pgdb
+      image: postgres
+      restart: always
+      ports:
+        - "5432:5432"
+      environment:
+        - POSTGRES_DB=waiter_lms
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
