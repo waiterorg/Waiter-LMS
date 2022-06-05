@@ -10,7 +10,7 @@ app = FastAPI(
         "email": "iwaiterorg@gmail.com",
     },
     license_info={
-        "name": "GNU",
+        "name": "MIT",
     },
 )
 
