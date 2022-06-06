@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from pydantic_schemas.user import User, UserCreate
 from sqlalchemy.orm import Session
 
-from api.utils.users_query import (
+from api.utils.users_queries import (
     create_user,
     get_user,
     get_user_by_email,
