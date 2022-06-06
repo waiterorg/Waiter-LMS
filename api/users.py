@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from pydantic_schemas.user import User, UserCreate
 from sqlalchemy.orm import Session
 
-from api.utils.users_query import get_users
+from api.utils.users_query import create_user, get_user_by_email, get_users
 
 router = fastapi.APIRouter()
 
@@ -20,9 +20,14 @@ async def read_users(
     return users
 
 
-@router.post("/users")
-async def create_user(user: User):
-    return "Success"
+@router.post("/users", response_model=User, status_code=201)
+async def create_new_user(user: UserCreate, db: Session = Depends(get_db)):
+    db_user = get_user_by_email(db=db, email=user.email)
+    if db_user:
+        raise HTTPException(
+            status_code=400, detail="Email is already registered"
+        )
+    return create_user(db=db, user=user)
 
 
 @router.get("/users/{id}")
