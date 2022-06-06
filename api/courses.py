@@ -1,12 +1,12 @@
 from typing import List
 
 import fastapi
+from db.db_setup import get_db
 from fastapi import Depends, HTTPException
+from pydantic_schemas.course import Course, CourseCreate
 from sqlalchemy.orm import Session
 
-from db.db_setup import get_db
-from pydantic_schemas.course import Course
-from api.utils.courses import get_courses
+from api.utils.courses_queries import create_course, get_courses
 
 router = fastapi.APIRouter()
 
@@ -17,9 +17,11 @@ async def read_courses(db: Session = Depends(get_db)):
     return courses
 
 
-@router.post("/courses")
-async def create_course_api():
-    return {"courses": []}
+@router.post("/courses", response_model=Course)
+async def create_new_course(
+    course: CourseCreate, db: Session = Depends(get_db)
+):
+    return create_course(db=db, course=course)
 
 
 @router.get("/courses/{id}")
