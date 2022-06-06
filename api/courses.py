@@ -6,7 +6,7 @@ from fastapi import Depends, HTTPException
 from pydantic_schemas.course import Course, CourseCreate
 from sqlalchemy.orm import Session
 
-from api.utils.courses_queries import create_course, get_courses
+from api.utils.courses_queries import create_course, get_course, get_courses
 
 router = fastapi.APIRouter()
 
@@ -24,9 +24,12 @@ async def create_new_course(
     return create_course(db=db, course=course)
 
 
-@router.get("/courses/{id}")
-async def read_course():
-    return {"courses": []}
+@router.get("/courses/{course_id}", response_model=Course)
+async def read_course(course_id: int, db: Session = Depends(get_db)):
+    db_course = get_course(db=db, course_id=course_id)
+    if db_course is None:
+        raise HTTPException(status_code=404, detail="Course not found")
+    return db_course
 
 
 @router.patch("/courses/{id}")
