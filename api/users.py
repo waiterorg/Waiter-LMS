@@ -7,7 +7,12 @@ from pydantic import BaseModel
 from pydantic_schemas.user import User, UserCreate
 from sqlalchemy.orm import Session
 
-from api.utils.users_query import create_user, get_user_by_email, get_users
+from api.utils.users_query import (
+    create_user,
+    get_user,
+    get_user_by_email,
+    get_users,
+)
 
 router = fastapi.APIRouter()
 
@@ -30,6 +35,9 @@ async def create_new_user(user: UserCreate, db: Session = Depends(get_db)):
     return create_user(db=db, user=user)
 
 
-@router.get("/users/{id}")
-async def get_user(id: int):
-    return {}
+@router.get("/users/{user_id}", response_model=User)
+async def read_user(user_id: int, db: Session = Depends(get_db)):
+    db_user = get_user(db=db, user_id=user_id)
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return db_user
