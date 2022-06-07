@@ -6,7 +6,9 @@ from sqlalchemy.orm import sessionmaker
 SQLALCHEMY_DATABASE_URL = (
     "postgresql+psycopg2://postgres:postgres@localhost/waiter_lms"
 )
-ASYNC_SQLALCHEMY_DATABASE_URL = "postgresql+asyncpg://gwen@localhost/fast_lms"
+ASYNC_SQLALCHEMY_DATABASE_URL = (
+    "postgresql+asyncpg://postgres:postgres@localhost/waiter_lms"
+)
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={}, future=True)
 async_engine = create_async_engine(ASYNC_SQLALCHEMY_DATABASE_URL)
