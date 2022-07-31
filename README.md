@@ -7,7 +7,7 @@ Learning management system with FastAPI .
 3. run this command to start the multicontainer application `docker-compose up -d`.
 4. run this command for start server `uvicorn main:app --reload` .
 
-## Feature
+## Future Feature
   - [ ] Authentication with jwt
   - [ ] API for sections
   - [ ] Test for API
